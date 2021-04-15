@@ -19,13 +19,13 @@ public class ToeplitzTest {
     return Stream.of(
       Arguments.of(
         new int[][]{
-          new int[]{1, 2, 3, 4},
-          new int[]{5, 1, 2, 3},
-          new int[]{9, 5, 1, 2}
+          {1, 2, 3, 4},
+          {5, 1, 2, 3},
+          {9, 5, 1, 2}
         }, true),
       Arguments.of(new int[][]{
-        new int[]{1, 2},
-        new int[]{2, 2}
+        {1, 2},
+        {2, 2}
       }, false)
     );
   }

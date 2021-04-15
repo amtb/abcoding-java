@@ -17,20 +17,20 @@ public class SlidingPuzzleTest {
   static Stream<Arguments> cases() {
     return Stream.of(
       Arguments.of(new int[][]{
-        new int[]{1, 2, 3},
-        new int[]{4, 0, 5}
+        {1, 2, 3},
+        {4, 0, 5}
       }, 1),
       Arguments.of(new int[][]{
-        new int[]{1, 2, 3},
-        new int[]{5, 4, 0}
+        {1, 2, 3},
+        {5, 4, 0}
       }, -1),
       Arguments.of(new int[][]{
-        new int[]{4, 1, 2},
-        new int[]{5, 0, 3}
+        {4, 1, 2},
+        {5, 0, 3}
       }, 5),
       Arguments.of(new int[][]{
-        new int[]{3, 2, 4},
-        new int[]{1, 5, 0}
+        {3, 2, 4},
+        {1, 5, 0}
       }, 14)
     );
   }
