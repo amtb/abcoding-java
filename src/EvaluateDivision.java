@@ -8,72 +8,64 @@ import java.util.Map;
  * https://leetcode.com/problems/evaluate-division/
  */
 public class EvaluateDivision {
-  class Edge {
-    String a, b;
-    double w;
+  class Quotient {
+    String numerator, denominator;
+    double value;
 
-    Edge(String a, String b, double w) {
-      this.a = a;
-      this.b = b;
-      this.w = w;
+    Quotient(String numerator, String denominator, double value) {
+      this.numerator = numerator;
+      this.denominator = denominator;
+      this.value = value;
     }
 
-    Edge revert() {
-      return new Edge(b, a, 1 / w);
-    }
-
-    String other() {
-      return b;
-    }
-
-    double weight() {
-      return w;
+    Quotient invert() {
+      return new Quotient(denominator, numerator, 1 / value);
     }
   }
 
   class Graph {
-    Map<String, List<Edge>> adjacents;
+    Map<String, List<Quotient>> equations;
 
     Graph() {
-      adjacents = new HashMap();
+      equations = new HashMap();
     }
 
-    void addEdge(String v, Edge e) {
-      List<Edge> edges = adjacents.getOrDefault(v, new LinkedList());
-      edges.add(e);
-      adjacents.put(v, edges);
+    void addQuotient(String v, Quotient q) {
+      List<Quotient> quotients = equations.getOrDefault(v, new LinkedList());
+      quotients.add(q);
+      equations.put(v, quotients);
     }
 
-    boolean hasVertex(String v) {
-      return adjacents.containsKey(v);
+    boolean hasVariable(String v) {
+      return equations.containsKey(v);
     }
 
-    List<Edge> edges(String v) {
-      return adjacents.getOrDefault(v, new LinkedList());
+    List<Quotient> getQuotients(String v) {
+      return equations.getOrDefault(v, new LinkedList());
     }
   }
 
   class DFS {
-    Map<String, Double> weights;
+    Map<String, Double> quotients;
 
     DFS(Graph g, String s) {
-      weights = new HashMap();
-      search(g, s, 1.0);
+      quotients = new HashMap();
+      traverse(g, s, 1.0);
     }
 
-    void search(Graph g, String s, double cw) {
-      weights.put(s, cw);
+    void traverse(Graph g, String s, double cq) {
+      quotients.put(s, cq);
 
-      for (Edge e : g.edges(s)) {
-        String b = e.other();
-        if (!weights.containsKey(b)) {
-          search(g, b, cw * e.weight());
+      for (Quotient q : g.getQuotients(s)) {
+        String b = q.denominator;
+        if (!quotients.containsKey(b)) {
+          traverse(g, b, cq * q.value);
         }
       }
     }
 
-    Double getResult(String t) {
-      return weights.getOrDefault(t, -1.0);
+    Double getQuotient(String t) {
+      return quotients.getOrDefault(t, -1.0);
     }
   }
 
@@ -86,9 +78,9 @@ public class EvaluateDivision {
       String b = equations.get(i).get(1);
       double w = values[i];
 
-      Edge e = new Edge(a, b, w);
-      g.addEdge(a, e);
-      g.addEdge(b, e.revert());
+      Quotient e = new Quotient(a, b, w);
+      g.addQuotient(a, e);
+      g.addQuotient(b, e.invert());
     }
 
     Map<String, DFS> searches = new HashMap();
@@ -97,10 +89,10 @@ public class EvaluateDivision {
       String b = queries.get(i).get(1);
 
       double result = -1;
-      if (g.hasVertex(a)) {
+      if (g.hasVariable(a)) {
         DFS dfs = searches.getOrDefault(a, new DFS(g, a));
         searches.put(a, dfs);
-        result = dfs.getResult(b);
+        result = dfs.getQuotient(b);
       }
 
       results[i] = result;
