@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BullsAndCowsTest {
   @ParameterizedTest
   @MethodSource("cases")
-  void bullsAndCows(String secret, String guess, String expected) {
+  void getHint(String secret, String guess, String expected) {
     BullsAndCows solution = new BullsAndCows();
     assertEquals(expected, solution.getHint(secret, guess));
   }
