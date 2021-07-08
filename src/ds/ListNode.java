@@ -41,4 +41,8 @@ public class ListNode {
 
     return list.stream().mapToInt(Integer::intValue).toArray();
   }
+
+  public int[] toArray() {
+    return ListNode.toArray(this);
+  }
 }
