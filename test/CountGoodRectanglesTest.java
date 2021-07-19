@@ -14,13 +14,6 @@ public class CountGoodRectanglesTest {
     assertEquals(output, solution.countGoodRectangles(rectangles));
   }
 
-  @ParameterizedTest
-  @MethodSource("cases")
-  void countGoodRectanglesAgain(int[][] rectangles, int output) {
-    CountGoodRectangles solution = new CountGoodRectangles();
-    assertEquals(output, solution.countGoodRectanglesAgain(rectangles));
-  }
-
   static Stream<Arguments> cases() {
     return Stream.of(
       Arguments.of(new int[][]{
@@ -38,6 +31,6 @@ public class CountGoodRectanglesTest {
       Arguments.of(new int[][]{
         {3, 1}
       }, 1)
-      );
+    );
   }
 }
